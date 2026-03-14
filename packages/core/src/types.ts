@@ -105,6 +105,7 @@ export interface ChatSendParams {
 export interface ChatHistoryParams {
   limit?: number;
   before?: string;
+  sessionKey?: string;
 }
 
 export interface ChatInjectParams {

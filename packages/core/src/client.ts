@@ -188,9 +188,16 @@ export class OpenClawClient {
 
   /**
    * Get chat history
+   * @param limit - Max number of messages to fetch
+   * @param before - Cursor for pagination (optional)
+   * @param sessionKey - Session key for the history (optional; defaults to client's sessionKey from connection/options)
    */
-  async getHistory(limit = 50, before?: string): Promise<Message[]> {
-    const params: ChatHistoryParams = { limit, before };
+  async getHistory(limit = 50, before?: string, sessionKey?: string): Promise<Message[]> {
+    const params: ChatHistoryParams = {
+      limit,
+      before,
+      sessionKey: sessionKey ?? this.sessionKey,
+    };
     const response = await this.request<{ messages: Message[] }>('chat.history', params);
     return response.messages;
   }

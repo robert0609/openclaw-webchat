@@ -198,6 +198,72 @@ describe('OpenClawClient', () => {
       await sendPromise;
     });
 
+    it('should request chat.history with sessionKey (defaults to client sessionKey)', async () => {
+      const { client, ws } = await createConnectedClient();
+
+      const historyPromise = client.getHistory(30);
+
+      await vi.waitFor(() => {
+        const messages = ws.getSentMessages();
+        return messages.some(
+          (m) => (m as { method?: string }).method === 'chat.history'
+        );
+      });
+
+      const historyReq = ws.getSentMessages().find(
+        (m) => (m as { method?: string }).method === 'chat.history'
+      ) as {
+        id: string;
+        method: string;
+        params: { limit: number; before?: string; sessionKey?: string };
+      };
+
+      expect(historyReq.params.limit).toBe(30);
+      expect(historyReq.params.sessionKey).toBe('test-session-key');
+
+      ws.simulateMessage({
+        type: 'res',
+        id: historyReq.id,
+        ok: true,
+        payload: { messages: [] },
+      });
+
+      const messages = await historyPromise;
+      expect(messages).toEqual([]);
+    });
+
+    it('should request chat.history with explicit sessionKey when provided', async () => {
+      const { client, ws } = await createConnectedClient();
+
+      const historyPromise = client.getHistory(20, undefined, 'custom-session-key');
+
+      await vi.waitFor(() => {
+        const messages = ws.getSentMessages();
+        return messages.some(
+          (m) => (m as { method?: string }).method === 'chat.history'
+        );
+      });
+
+      const historyReq = ws.getSentMessages().find(
+        (m) => (m as { method?: string }).method === 'chat.history'
+      ) as {
+        id: string;
+        params: { limit: number; sessionKey?: string };
+      };
+
+      expect(historyReq.params.limit).toBe(20);
+      expect(historyReq.params.sessionKey).toBe('custom-session-key');
+
+      ws.simulateMessage({
+        type: 'res',
+        id: historyReq.id,
+        ok: true,
+        payload: { messages: [] },
+      });
+
+      await historyPromise;
+    });
+
     it('should emit message event on server message', async () => {
       const { client, ws } = await createConnectedClient();
 
