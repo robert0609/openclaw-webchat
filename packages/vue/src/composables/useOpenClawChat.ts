@@ -5,7 +5,7 @@ import {
   OpenClawClientOptions,
   Message,
   ConnectionState,
-} from 'openclaw-webchat';
+} from '@cielo/openclaw-webchat';
 
 export interface UseOpenClawChatOptions extends OpenClawClientOptions {
   /** Auto-connect on mount (default: true) */
@@ -56,7 +56,7 @@ export interface UseOpenClawChatReturn {
  * @example
  * ```vue
  * <script setup>
- * import { useOpenClawChat } from 'openclaw-webchat-vue';
+ * import { useOpenClawChat } from '@cielo/openclaw-webchat-vue';
  *
  * const {
  *   messages,

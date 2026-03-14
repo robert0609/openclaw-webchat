@@ -16,14 +16,14 @@ alwaysApply: true
 
 ```
 packages/
-├── core/     # openclaw-webchat — 框架无关的 WebSocket 客户端（无 React/Vue 依赖）
-├── react/    # openclaw-webchat-react — 依赖 core，提供 useOpenClawChat + ChatWidget
-└── vue/      # openclaw-webchat-vue — 依赖 core，提供 useOpenClawChat + ChatWidget
+├── core/     # @cielo/openclaw-webchat — 框架无关的 WebSocket 客户端（无 React/Vue 依赖）
+├── react/    # @cielo/openclaw-webchat-react — 依赖 core，提供 useOpenClawChat + ChatWidget
+└── vue/      # @cielo/openclaw-webchat-vue — 依赖 core，提供 useOpenClawChat + ChatWidget
 apps/
 └── demo/     # Vite 演示应用，同时引用 core / react / vue，用于手工验证
 ```
 
-- **core** 为底层依赖，**react** 与 **vue** 仅依赖 `openclaw-webchat`（workspace:*），互不依赖。
+- **core** 为底层依赖，**react** 与 **vue** 仅依赖 `@cielo/openclaw-webchat`（workspace:*），互不依赖。
 - **demo** 仅用于演示与手动测试，不参与发布。
 
 ## 包职责与导出
@@ -32,7 +32,7 @@ apps/
 |----|------|----------|
 | **core** | WebSocket 连接、鉴权握手、消息/流式、重连 | `OpenClawClient`、协议与选项类型（见 `packages/core/src/types.ts`） |
 | **react** | 封装 core，管理消息/连接/加载/流式状态 | `useOpenClawChat`、`ChatWidget`、部分 core 类型再导出 |
-| **vue** | 同上，Vue 版 | `useOpenClawChat`、`ChatWidget`、部分 core 类型再导出；样式需 `import 'openclaw-webchat-vue/style.css'` |
+| **vue** | 同上，Vue 版 | `useOpenClawChat`、`ChatWidget`、部分 core 类型再导出；样式需 `import '@cielo/openclaw-webchat-vue/style.css'` |
 
 - 各包 **公共 API 均从 `src/index.ts` 导出**，不要从子路径直接导出给用户，除非在 package.json 的 `exports` 中声明。
 

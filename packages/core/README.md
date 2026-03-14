@@ -1,21 +1,21 @@
-# openclaw-webchat
+# @cielo/openclaw-webchat
 
 Core WebSocket client for OpenClaw Gateway. Framework-agnostic, works with any JavaScript environment.
 
 ## Installation
 
 ```bash
-npm install openclaw-webchat
+npm install @cielo/openclaw-webchat
 # or
-pnpm add openclaw-webchat
+pnpm add @cielo/openclaw-webchat
 # or
-yarn add openclaw-webchat
+yarn add @cielo/openclaw-webchat
 ```
 
 ## Quick Start
 
 ```typescript
-import { OpenClawClient } from 'openclaw-webchat';
+import { OpenClawClient } from '@cielo/openclaw-webchat';
 
 const client = new OpenClawClient({
   gateway: 'wss://your-gateway.example.com/ws',

@@ -1,15 +1,15 @@
-# openclaw-webchat-react
+# @cielo/openclaw-webchat-react
 
 React hooks and components for OpenClaw Gateway. Build AI chat interfaces with ease.
 
 ## Installation
 
 ```bash
-npm install openclaw-webchat-react
+npm install @cielo/openclaw-webchat-react
 # or
-pnpm add openclaw-webchat-react
+pnpm add @cielo/openclaw-webchat-react
 # or
-yarn add openclaw-webchat-react
+yarn add @cielo/openclaw-webchat-react
 ```
 
 ## Quick Start
@@ -19,7 +19,7 @@ yarn add openclaw-webchat-react
 Drop-in chat widget with built-in UI:
 
 ```tsx
-import { ChatWidget } from 'openclaw-webchat-react';
+import { ChatWidget } from '@cielo/openclaw-webchat-react';
 
 function App() {
   return (
@@ -39,7 +39,7 @@ function App() {
 Build your own chat interface:
 
 ```tsx
-import { useOpenClawChat } from 'openclaw-webchat-react';
+import { useOpenClawChat } from '@cielo/openclaw-webchat-react';
 
 function CustomChat() {
   const {
@@ -264,7 +264,7 @@ import type {
   OpenClawClientOptions,
   Message,
   ConnectionState,
-} from 'openclaw-webchat-react';
+} from '@cielo/openclaw-webchat-react';
 ```
 
 ## License

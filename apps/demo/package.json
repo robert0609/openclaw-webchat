@@ -1,5 +1,5 @@
 {
-  "name": "@openclaw/demo",
+  "name": "@cielo/demo",
   "version": "0.0.1",
   "private": true,
   "type": "module",
@@ -9,9 +9,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "openclaw-webchat": "workspace:*",
-    "openclaw-webchat-react": "workspace:*",
-    "openclaw-webchat-vue": "workspace:*",
+    "@cielo/openclaw-webchat": "workspace:*",
+    "@cielo/openclaw-webchat-react": "workspace:*",
+    "@cielo/openclaw-webchat-vue": "workspace:*",
     "react": "^18.3.0",
     "react-dom": "^18.3.0",
     "vue": "^3.5.0"

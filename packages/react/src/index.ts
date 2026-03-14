@@ -11,4 +11,4 @@ export type {
   OpenClawClientOptions,
   Message,
   ConnectionState,
-} from 'openclaw-webchat';
+} from '@cielo/openclaw-webchat';

@@ -1,8 +1,8 @@
 # OpenClaw WebChat SDK
 
-[![npm version](https://img.shields.io/npm/v/openclaw-webchat.svg)](https://www.npmjs.com/package/openclaw-webchat)
-[![npm downloads](https://img.shields.io/npm/dm/openclaw-webchat.svg)](https://www.npmjs.com/package/openclaw-webchat)
-[![license](https://img.shields.io/npm/l/openclaw-webchat.svg)](https://github.com/raw34/openclaw-webchat/blob/main/LICENSE)
+[![npm version](https://img.shields.io/npm/v/@cielo/openclaw-webchat.svg)](https://www.npmjs.com/package/@cielo/openclaw-webchat)
+[![npm downloads](https://img.shields.io/npm/dm/@cielo/openclaw-webchat.svg)](https://www.npmjs.com/package/@cielo/openclaw-webchat)
+[![license](https://img.shields.io/npm/l/@cielo/openclaw-webchat.svg)](https://github.com/raw34/openclaw-webchat/blob/main/LICENSE)
 [![CI](https://github.com/raw34/openclaw-webchat/actions/workflows/ci.yml/badge.svg)](https://github.com/raw34/openclaw-webchat/actions/workflows/ci.yml)
 
 [English](./README.md)
@@ -28,20 +28,20 @@
 
 | 包名 | 版本 | 说明 |
 |------|------|------|
-| [`openclaw-webchat`](./packages/core) | [![npm](https://img.shields.io/npm/v/openclaw-webchat.svg)](https://www.npmjs.com/package/openclaw-webchat) | 核心 WebSocket 客户端（框架无关） |
-| [`openclaw-webchat-react`](./packages/react) | [![npm](https://img.shields.io/npm/v/openclaw-webchat-react.svg)](https://www.npmjs.com/package/openclaw-webchat-react) | React Hooks 和组件 |
-| [`openclaw-webchat-vue`](./packages/vue) | [![npm](https://img.shields.io/npm/v/openclaw-webchat-vue.svg)](https://www.npmjs.com/package/openclaw-webchat-vue) | Vue Composables 和组件 |
+| [`@cielo/openclaw-webchat`](./packages/core) | [![npm](https://img.shields.io/npm/v/@cielo/openclaw-webchat.svg)](https://www.npmjs.com/package/@cielo/openclaw-webchat) | 核心 WebSocket 客户端（框架无关） |
+| [`@cielo/openclaw-webchat-react`](./packages/react) | [![npm](https://img.shields.io/npm/v/@cielo/openclaw-webchat-react.svg)](https://www.npmjs.com/package/@cielo/openclaw-webchat-react) | React Hooks 和组件 |
+| [`@cielo/openclaw-webchat-vue`](./packages/vue) | [![npm](https://img.shields.io/npm/v/@cielo/openclaw-webchat-vue.svg)](https://www.npmjs.com/package/@cielo/openclaw-webchat-vue) | Vue Composables 和组件 |
 
 ## 快速开始
 
 ### React
 
 ```bash
-npm install openclaw-webchat-react
+npm install @cielo/openclaw-webchat-react
 ```
 
 ```tsx
-import { ChatWidget } from 'openclaw-webchat-react';
+import { ChatWidget } from '@cielo/openclaw-webchat-react';
 
 function App() {
   return (
@@ -59,7 +59,7 @@ function App() {
 使用 Hook 自定义 UI：
 
 ```tsx
-import { useOpenClawChat } from 'openclaw-webchat-react';
+import { useOpenClawChat } from '@cielo/openclaw-webchat-react';
 
 function CustomChat() {
   const { messages, isConnected, isLoading, streamingContent, send } = useOpenClawChat({
@@ -92,13 +92,13 @@ function CustomChat() {
 ### Vue
 
 ```bash
-npm install openclaw-webchat-vue
+npm install @cielo/openclaw-webchat-vue
 ```
 
 ```vue
 <script setup>
-import { ChatWidget } from 'openclaw-webchat-vue';
-import 'openclaw-webchat-vue/style.css';  // 必须引入样式
+import { ChatWidget } from '@cielo/openclaw-webchat-vue';
+import '@cielo/openclaw-webchat-vue/style.css';  // 必须引入样式
 </script>
 
 <template>
@@ -117,7 +117,7 @@ import 'openclaw-webchat-vue/style.css';  // 必须引入样式
 ```vue
 <script setup>
 import { ref } from 'vue';
-import { useOpenClawChat } from 'openclaw-webchat-vue';
+import { useOpenClawChat } from '@cielo/openclaw-webchat-vue';
 
 const { messages, isConnected, isLoading, streamingContent, send } = useOpenClawChat({
   gateway: 'wss://ai.example.com:18789',
@@ -146,11 +146,11 @@ function handleSend() {
 ### Core（原生 JS / 任意框架）
 
 ```bash
-npm install openclaw-webchat
+npm install @cielo/openclaw-webchat
 ```
 
 ```typescript
-import { OpenClawClient } from 'openclaw-webchat';
+import { OpenClawClient } from '@cielo/openclaw-webchat';
 
 const client = new OpenClawClient({
   gateway: 'wss://ai.example.com:18789',

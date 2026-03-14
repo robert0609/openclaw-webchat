@@ -10,6 +10,6 @@ export default defineConfig({
   clean: true,
   treeshake: true,
   minify: false,
-  external: ['vue', 'openclaw-webchat'],
+  external: ['vue', '@cielo/openclaw-webchat'],
   esbuildPlugins: [vuePlugin()],
 });

@@ -1,15 +1,15 @@
-# openclaw-webchat-vue
+# @cielo/openclaw-webchat-vue
 
 Vue 3 composables and components for OpenClaw Gateway. Build AI chat interfaces with ease.
 
 ## Installation
 
 ```bash
-npm install openclaw-webchat-vue
+npm install @cielo/openclaw-webchat-vue
 # or
-pnpm add openclaw-webchat-vue
+pnpm add @cielo/openclaw-webchat-vue
 # or
-yarn add openclaw-webchat-vue
+yarn add @cielo/openclaw-webchat-vue
 ```
 
 ## Quick Start
@@ -20,8 +20,8 @@ Drop-in chat widget with built-in UI:
 
 ```vue
 <script setup>
-import { ChatWidget } from 'openclaw-webchat-vue';
-import 'openclaw-webchat-vue/style.css';  // Required for styles
+import { ChatWidget } from '@cielo/openclaw-webchat-vue';
+import '@cielo/openclaw-webchat-vue/style.css';  // Required for styles
 </script>
 
 <template>
@@ -44,7 +44,7 @@ Build your own chat interface:
 ```vue
 <script setup>
 import { ref } from 'vue';
-import { useOpenClawChat } from 'openclaw-webchat-vue';
+import { useOpenClawChat } from '@cielo/openclaw-webchat-vue';
 
 const {
   messages,
@@ -250,7 +250,7 @@ interface UseOpenClawChatOptions {
 
 ```vue
 <script setup>
-import { useOpenClawChat } from 'openclaw-webchat-vue';
+import { useOpenClawChat } from '@cielo/openclaw-webchat-vue';
 
 const { isConnected, connect, disconnect } = useOpenClawChat({
   gateway: 'wss://your-gateway.example.com/ws',
@@ -270,7 +270,7 @@ const { isConnected, connect, disconnect } = useOpenClawChat({
 ```vue
 <script setup>
 import { ref, watch } from 'vue';
-import { useOpenClawChat } from 'openclaw-webchat-vue';
+import { useOpenClawChat } from '@cielo/openclaw-webchat-vue';
 
 const gateway = ref('wss://gateway1.example.com/ws');
 
@@ -293,7 +293,7 @@ import type {
   OpenClawClientOptions,
   Message,
   ConnectionState,
-} from 'openclaw-webchat-vue';
+} from '@cielo/openclaw-webchat-vue';
 ```
 
 ## CSS Import
@@ -302,10 +302,10 @@ The ChatWidget component uses scoped CSS. You **must** import the styles:
 
 ```typescript
 // Option 1: In your main entry file
-import 'openclaw-webchat-vue/style.css';
+import '@cielo/openclaw-webchat-vue/style.css';
 
 // Option 2: In your component
-import 'openclaw-webchat-vue/dist/index.css';
+import '@cielo/openclaw-webchat-vue/dist/index.css';
 ```
 
 If styles are not showing, make sure you've imported the CSS file.

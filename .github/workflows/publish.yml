@@ -120,16 +120,16 @@ jobs:
 
             | Package | Version |
             |---------|---------|
-            | [openclaw-webchat](https://www.npmjs.com/package/openclaw-webchat) | ${{ steps.version.outputs.version }} |
-            | [openclaw-webchat-react](https://www.npmjs.com/package/openclaw-webchat-react) | ${{ steps.version.outputs.version }} |
-            | [openclaw-webchat-vue](https://www.npmjs.com/package/openclaw-webchat-vue) | ${{ steps.version.outputs.version }} |
+            | [@cielo/openclaw-webchat](https://www.npmjs.com/package/@cielo/openclaw-webchat) | ${{ steps.version.outputs.version }} |
+            | [@cielo/openclaw-webchat-react](https://www.npmjs.com/package/@cielo/openclaw-webchat-react) | ${{ steps.version.outputs.version }} |
+            | [@cielo/openclaw-webchat-vue](https://www.npmjs.com/package/@cielo/openclaw-webchat-vue) | ${{ steps.version.outputs.version }} |
 
             ## Installation
 
             ```bash
-            npm install openclaw-webchat-react
+            npm install @cielo/openclaw-webchat-react
             # or
-            npm install openclaw-webchat-vue
+            npm install @cielo/openclaw-webchat-vue
             ```
           draft: false
           prerelease: false

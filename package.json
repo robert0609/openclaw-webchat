@@ -1,5 +1,5 @@
 {
-  "name": "openclaw-webchat",
+  "name": "@cielo/openclaw-webchat",
   "version": "0.0.1",
   "private": true,
   "description": "Embeddable WebChat SDK for OpenClaw Gateway",

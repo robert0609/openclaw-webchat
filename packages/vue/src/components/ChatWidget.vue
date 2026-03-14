@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, watch, nextTick } from 'vue';
-import type { OpenClawClientOptions, Message } from 'openclaw-webchat';
+import type { OpenClawClientOptions, Message } from '@cielo/openclaw-webchat';
 import { useOpenClawChat } from '../composables/useOpenClawChat';
 
 export interface ChatWidgetProps {
