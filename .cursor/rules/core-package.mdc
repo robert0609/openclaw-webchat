@@ -1,0 +1,50 @@
+---
+description: packages/core 包详细开发规则（WebSocket 客户端）
+globs: "packages/core/**"
+alwaysApply: false
+---
+
+# Core 包开发规则
+
+## 包职责与边界
+
+- **core** 是框架无关的 OpenClaw Gateway WebSocket 客户端，**不得**依赖 React、Vue 或任何 UI 框架。
+- 仅对外暴露 `OpenClawClient` 与 `packages/core/src/types.ts` 中的类型；入口为 `src/index.ts`，新增对外 API 必须在此导出。
+
+## 源码结构
+
+| 文件 | 职责 |
+|------|------|
+| `src/index.ts` | 统一导出 `OpenClawClient` 及所有对外类型 |
+| `src/types.ts` | 协议与客户端类型（Frame、Connection、Chat、Options、ClientState、Events） |
+| `src/client.ts` | `OpenClawClient` 类：连接、请求/响应、事件派发、重连、流式处理 |
+| `src/__tests__/` | 单测；`MockWebSocket.ts` 为 WebSocket 模拟，`*.test.ts` 为用例 |
+
+- 新增协议字段或事件时，**先**在 `types.ts` 中补充类型并（如需要）在 `index.ts` 中导出，再在 `client.ts` 中实现。
+
+## 协议与流程
+
+- **帧类型**：`req`（请求）、`res`（响应）、`event`（服务端事件）；见 `Frame`、`RequestFrame`、`ResponseFrame`、`EventFrame`。
+- **连接流程**：建立 WebSocket → 收到 `connect.challenge`（req 或 event）→ 发送 `connect` 请求（含 `ConnectParams`）→ 收到 `res` 且 `payload.type === 'hello-ok'` 视为连接成功；在 hello-ok 中解析 `sessionKey`、`deviceToken`。
+- **请求/响应**：通过 `request<T>(method, params)` 发 `req`，用 `pendingRequests` + 超时（如 30s）等待对应 `res`；超时或 `res.ok === false` 时 reject。
+- **事件**：在 `handleEvent` 中根据 `frame.event` 分支；已知事件包括 `message`、`stream.start`、`stream.chunk`、`chat`（流式 delta/final）等；未识别事件仅打 debug 日志，不抛错。
+
+## 客户端行为约定
+
+- **事件订阅**：`on` / `off` / `once`，类型与 `OpenClawClientEvents` 一致；回调异常用 try/catch 包裹并 log，不抛到外层。
+- **状态**：`ClientState` 仅通过 `setState(partial)` 更新，每次更新后 `emit('stateChange', this.state)`。
+- **重连**：在 `handleDisconnect` 中根据 `options.reconnect` 与 `maxReconnectAttempts` 决定是否 `scheduleReconnect`；重连前 `emit('reconnecting', attempt)`。
+- **流式**：`chat` 事件中维护 `currentStreamingMessageId` 与 `lastStreamedContent`，按 delta 派发 `streamChunk`，在 `state === 'final'` 时派发 `message` 与 `streamEnd` 并重置状态。
+- **默认选项**：在 `client.ts` 顶部用 `DEFAULT_OPTIONS` 定义默认值，构造函数中 `this.options = { ...DEFAULT_OPTIONS, ...options }`；新增选项时同步更新 `DEFAULT_OPTIONS` 与 `OpenClawClientOptions`。
+
+## 测试
+
+- 使用 **Vitest**；测试文件命名为 `*.test.ts`，放在 `src/__tests__/`。
+- 用 `MockWebSocket` 替代全局 `WebSocket`：`vi.stubGlobal('WebSocket', MockWebSocket)`；每个用例前 `MockWebSocket.reset()`。
+- 覆盖：连接握手（challenge → connect → hello-ok）、超时、鉴权失败、断线与重连、消息与流式事件、`request` 超时与错误。需模拟收发包时，通过 `ws.simulateOpen()`、`ws.simulateMessage(...)`、`ws.getSentMessages()` 等与协议帧结构对齐。
+- 修改客户端行为或协议处理逻辑后，补充或更新对应单测，并运行 `pnpm test`（可限定 `packages/core`）。
+
+## 构建与依赖
+
+- 构建由 **tsup** 完成（`tsup.config.ts`）：入口 `src/index.ts`，产出 ESM + CJS + `.d.ts`；无额外运行时依赖。
+- 仅使用 `types.ts` 与 `client.ts` 中已导入的类型/接口；不引入新的外部依赖前需与团队确认。

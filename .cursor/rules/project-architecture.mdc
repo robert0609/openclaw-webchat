@@ -1,0 +1,54 @@
+---
+description: OpenClaw WebChat 项目架构与包层级说明
+alwaysApply: true
+---
+
+# 项目架构规则
+
+## 仓库概览
+
+本仓库是 **pnpm 工作区 monorepo**，提供可嵌入的 OpenClaw Gateway WebChat SDK（React / Vue 组件与 WebSocket 客户端）。
+
+- **Node**: >=22，**包管理**: pnpm@9
+- **根命令**: `pnpm install`、`pnpm build`、`pnpm dev`、`pnpm test`、`pnpm lint`
+
+## 目录与包层级
+
+```
+packages/
+├── core/     # openclaw-webchat — 框架无关的 WebSocket 客户端（无 React/Vue 依赖）
+├── react/    # openclaw-webchat-react — 依赖 core，提供 useOpenClawChat + ChatWidget
+└── vue/      # openclaw-webchat-vue — 依赖 core，提供 useOpenClawChat + ChatWidget
+apps/
+└── demo/     # Vite 演示应用，同时引用 core / react / vue，用于手工验证
+```
+
+- **core** 为底层依赖，**react** 与 **vue** 仅依赖 `openclaw-webchat`（workspace:*），互不依赖。
+- **demo** 仅用于演示与手动测试，不参与发布。
+
+## 包职责与导出
+
+| 包 | 职责 | 主要导出 |
+|----|------|----------|
+| **core** | WebSocket 连接、鉴权握手、消息/流式、重连 | `OpenClawClient`、协议与选项类型（见 `packages/core/src/types.ts`） |
+| **react** | 封装 core，管理消息/连接/加载/流式状态 | `useOpenClawChat`、`ChatWidget`、部分 core 类型再导出 |
+| **vue** | 同上，Vue 版 | `useOpenClawChat`、`ChatWidget`、部分 core 类型再导出；样式需 `import 'openclaw-webchat-vue/style.css'` |
+
+- 各包 **公共 API 均从 `src/index.ts` 导出**，不要从子路径直接导出给用户，除非在 package.json 的 `exports` 中声明。
+
+## 构建与产物
+
+- **packages/***：使用 **tsup** 构建，产出 ESM + CJS + `.d.ts`，各包有独立 `tsup.config.ts`。
+- **apps/demo**：使用 **Vite** 构建与开发。
+- 发布内容以各 package 的 `files` 为准（通常为 `dist`）。
+
+## 代码与类型归属
+
+- **协议与客户端类型**（Frame、Message、OpenClawClientOptions 等）定义在 **core** 的 `packages/core/src/types.ts`；react/vue 仅做必要类型的再导出。
+- **core** 采用事件发射器模式（如 `message`、`streamChunk`、`connected`），具体见 `packages/core/src/client.ts`。
+- 新增或修改跨包行为时，**先考虑是否应落在 core**，再在 react/vue 做薄封装。
+
+## 其他目录
+
+- **docs/**：文档与规划。
+- **scripts/**：发布与版本脚本（如 `check-versions.js`、`bump-version.js`），由根 `package.json` 的脚本调用。
