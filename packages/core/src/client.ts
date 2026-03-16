@@ -456,7 +456,8 @@ export class OpenClawClient {
       minProtocol: 3,
       maxProtocol: 3,
       client: {
-        id: this.options.clientId,
+        id: 'webchat',
+        displayName: this.options.clientId,
         version: this.options.clientVersion,
         platform: typeof window !== 'undefined' ? 'browser' : 'node',
         mode: 'node',

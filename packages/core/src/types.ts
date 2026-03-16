@@ -50,6 +50,7 @@ export interface ConnectParams {
   maxProtocol: number;
   client: {
     id: string;
+    displayName?: string;
     version: string;
     platform: string;
     mode: 'operator' | 'node';
@@ -145,7 +146,7 @@ export interface OpenClawClientOptions {
   /** Client name for identification */
   clientName?: string;
 
-  /** Client id sent in connect request (default: 'webchat') */
+  /** Client display name sent in connect request as client.displayName (default: 'webchat') */
   clientId?: string;
 
   /** Client version */
