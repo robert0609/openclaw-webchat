@@ -61,6 +61,9 @@ interface OpenClawClientOptions {
   /** Client name for identification */
   clientName?: string;
 
+  /** Client id sent in connect request (default: 'webchat') */
+  clientId?: string;
+
   /** Client version */
   clientVersion?: string;
 

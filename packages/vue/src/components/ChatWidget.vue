@@ -10,6 +10,7 @@ export interface ChatWidgetProps {
   password?: string;
   deviceToken?: string;
   clientName?: string;
+  clientId?: string;
   clientVersion?: string;
   reconnect?: boolean;
   reconnectInterval?: number;
@@ -57,6 +58,7 @@ const clientOptions: OpenClawClientOptions & { autoConnect?: boolean } = Object.
     password: props.password,
     deviceToken: props.deviceToken,
     clientName: props.clientName,
+    clientId: props.clientId,
     clientVersion: props.clientVersion,
     reconnect: props.reconnect,
     reconnectInterval: props.reconnectInterval,

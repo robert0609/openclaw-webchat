@@ -28,6 +28,7 @@ const DEFAULT_OPTIONS: Required<
     | 'connectionTimeout'
     | 'debug'
     | 'clientName'
+    | 'clientId'
     | 'clientVersion'
   >
 > = {
@@ -37,6 +38,7 @@ const DEFAULT_OPTIONS: Required<
   connectionTimeout: 10000,
   debug: false,
   clientName: 'openclaw-webchat',
+  clientId: 'webchat',
   clientVersion: '0.1.0',
 };
 
@@ -454,7 +456,7 @@ export class OpenClawClient {
       minProtocol: 3,
       maxProtocol: 3,
       client: {
-        id: 'webchat',
+        id: this.options.clientId,
         version: this.options.clientVersion,
         platform: typeof window !== 'undefined' ? 'browser' : 'node',
         mode: 'node',
