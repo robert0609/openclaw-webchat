@@ -343,6 +343,18 @@ export class OpenClawClient {
     }
   }
 
+  /**
+   * Gateway 下发的 payload.sessionKey 格式为 `agent:main:${sessionKey}`。
+   * 仅当 payload 的 sessionKey 与当前客户端的 sessionKey 匹配时视为本会话消息。
+   */
+  private isPayloadForThisSession(payload: unknown): boolean {
+    if (this.sessionKey === undefined) return true;
+    if (payload === null || typeof payload !== 'object' || !('sessionKey' in payload)) return true;
+    const key = (payload as { sessionKey?: string }).sessionKey;
+    if (key === undefined) return true;
+    return key === `agent:main:${this.sessionKey}`;
+  }
+
   private handleEvent(frame: EventFrame): void {
     switch (frame.event) {
       case 'connect.challenge':
@@ -370,6 +382,10 @@ export class OpenClawClient {
         break;
 
       case 'chat':
+        if (!this.isPayloadForThisSession(frame.payload)) {
+          this.log('Ignoring chat for different session');
+          break;
+        }
         // OpenClaw Gateway uses 'chat' event for streaming responses
         this.handleChatEvent(frame.payload);
         break;
